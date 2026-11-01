@@ -1,0 +1,38 @@
+{
+  "kind": "url",
+  "created": "2026-10-09T07:09:42+00:00",
+  "classes": [
+    "bad",
+    "good"
+  ],
+  "malicious_class": "bad",
+  "default_threshold": 0.5,
+  "preprocessing": "detectors/url_features.normalize_url (strip scheme, credentials, www., fragment; ensure \"/\" after host)",
+  "training_rows_raw": 420464,
+  "training_rows_used": 411246,
+  "training_domains": 116630,
+  "class_counts": {
+    "good": 344799,
+    "bad": 66447
+  },
+  "sklearn_version": "1.6.1",
+  "numpy_version": "2.0.2",
+  "held_out_metrics": {
+    "split": "GroupShuffleSplit by registered domain, 80/20, seed 42",
+    "test_rows": 80060,
+    "test_domains": 23326,
+    "threshold": 0.5,
+    "accuracy": 0.9633399950037472,
+    "precision_bad": 0.9383865633974415,
+    "recall_bad": 0.8288239815526518,
+    "f1_bad": 0.8802089710624056,
+    "roc_auc": 0.9819239683121055,
+    "false_positive_rate": 0.010559284116331096,
+    "tn": 66342,
+    "fp": 708,
+    "fn": 2227,
+    "tp": 10783,
+    "brier": 0.03062502906418322,
+    "expected_calibration_error": 0.0371025416961557
+  }
+}

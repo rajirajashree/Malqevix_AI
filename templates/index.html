@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b1220">
+  <meta name="description" content="Analyze suspicious URLs and scan CSV process features with Malware Detector.">
+  <title>Malqevix</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body data-max-upload-mb="{{ limits.max_upload_mb }}" data-max-url-length="{{ limits.max_url_length }}">
+  <a class="skip" href="#main">Skip to content</a>
+
+  <header class="top">
+    <div class="brand">
+      <img class="mark" src="{{ url_for('static', filename='images/ai-brain-logo.png') }}" alt="AI Brain Logo">
+      <span>Malqevix</span>
+    </div>
+    <div role="tablist" aria-label="Detection type" class="tabs">
+      <button role="tab" id="tab-url" aria-controls="panel-url" aria-selected="true" class="tab">URL check</button>
+      <button role="tab" id="tab-file" aria-controls="panel-file" aria-selected="false" tabindex="-1" class="tab">CSV scan</button>
+    </div>
+  </header>
+
+  <div id="status-banner" class="banner" role="alert" hidden></div>
+
+  <main id="main">
+    <!-- ============================ URL ============================ -->
+    <section id="panel-url" role="tabpanel" aria-labelledby="tab-url" class="workspace">
+      <div class="input-col">
+        <h1>Check a URL</h1>
+        <p class="lede">Paste a link to see whether its text looks like known malicious URLs. The address is analysed as text only and is never opened.</p>
+        <form id="url-form" novalidate>
+          <label for="url-input">Web address</label>
+          <input id="url-input" name="url" type="text" inputmode="url" autocomplete="off" spellcheck="false"
+                 placeholder="https://example.com/login" aria-describedby="url-hint url-error" maxlength="{{ limits.max_url_length }}">
+          <p id="url-hint" class="hint">Works with or without https:// and www.</p>
+          <p id="url-error" class="field-error" role="alert" hidden></p>
+          <button type="submit" class="primary" id="url-submit"><span class="btn-label">Check URL</span><span class="spinner" aria-hidden="true"></span></button>
+        </form>
+      </div>
+      <div class="result-col" id="url-result" aria-live="polite" aria-busy="false">
+        <div class="empty"><p>The verdict and score appear here.</p></div>
+      </div>
+    </section>
+
+    <!-- ============================ CSV ============================ -->
+    <section id="panel-file" role="tabpanel" aria-labelledby="tab-file" class="workspace" hidden>
+      <div class="input-col">
+        <h1>Scan a feature CSV</h1>
+        <p class="lede">Upload a CSV of process features (27 numeric columns). Each row gets a malware score. Files are read as data and never executed.</p>
+        <form id="file-form" novalidate>
+          <label class="drop" id="drop" for="file-input">
+            <input id="file-input" type="file" name="file" accept=".csv,text/csv" aria-describedby="file-hint file-error">
+            <span class="drop-title" id="drop-title">Drop a .csv file here or choose one</span>
+            <span class="drop-sub" id="file-hint">Up to {{ limits.max_upload_mb }} MB and {{ "{:,}".format(limits.max_rows) }} rows. The first row must hold the column names.</span>
+          </label>
+          <p id="file-error" class="field-error" role="alert" hidden></p>
+          <button type="submit" class="primary" id="file-submit"><span class="btn-label">Scan file</span><span class="spinner" aria-hidden="true"></span></button>
+        </form>
+        <details class="cols">
+          <summary>Required columns</summary>
+          <p>millisecond, state, usage_counter, prio, static_prio, normal_prio, policy, vm_pgoff, task_size, cached_hole_size, free_area_cache, mm_users, map_count, hiwater_rss, total_vm, reserved_vm, nr_ptes, end_data, last_interval, nivcsw, min_flt, fs_excl_counter, lock, stime, gtime, cgtime, signal_nvcsw</p>
+        </details>
+      </div>
+      <div class="result-col" id="file-result" aria-live="polite" aria-busy="false">
+        <div class="empty"><p>The scan summary and download appear here.</p></div>
+      </div>
+    </section>
+  </main>
+
+  <script src="{{ url_for('static', filename='js/app.js') }}" defer></script>
+</body>
+</html>

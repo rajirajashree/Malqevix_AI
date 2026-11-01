@@ -1,0 +1,4 @@
+# Optional: only needed if you set MALWARE_ENGINE=keras to use your original neural network (model/binary_malware_detector_model.h5)
+-r requirements.txt
+tensorflow==2.19.0
+h5py==3.16.0
